@@ -3,8 +3,10 @@ const appRouter = express.Router();
 const product = require('./newProduct');
 
 const productos = [];
-appRouter.get('/',(req, res)=>{
-    res.json({message:'test route'})
+
+appRouter.post('/',(req, res)=>{
+    console.log(req.body)
+    res.json({message: req.body})
 })
 
 appRouter.get('/productos/vista', (req, res)=>{
@@ -43,7 +45,7 @@ appRouter.get('/productos/listar/:id', (req, res)=>{
 });
 
 appRouter.post('/productos/guardar', (req, res)=>{
-   try{ 
+   try{
     const {title, price, thumbnail}=req.body;
     const newProduct = new product(title, price, thumbnail);
     productos.length < 1 ? newProduct.productId(0) : newProduct.productId(productos.length)
@@ -54,7 +56,7 @@ appRouter.post('/productos/guardar', (req, res)=>{
     }
 });
 
-appRouter.put('/productos/update', (req, res)=>{
+appRouter.put('/productos/update/:id', (req, res)=>{
     try{
         const {id} = req.body;
         const productIndex = productos.findIndex(x=>x.id == id);

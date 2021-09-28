@@ -1,0 +1,54 @@
+POST http://localhost:8080/api/productos/guardar HTTP/1.1
+content-type: application/json
+
+    {
+		"title": "Dominar 400",
+		"price": "760000.00",
+		"thumbnail": "https://syr.us/5k4"
+	}
+
+###
+
+POST http://localhost:8080/api/productos/guardar HTTP/1.1
+content-type: application/json
+
+    {
+		"title": "Svartpilen 400",
+		"price": "900000.00",
+		"thumbnail": "https://syr.us/62V"
+	}
+
+
+###
+
+POST http://localhost:8080/api/productos/guardar HTTP/1.1
+content-type: application/json
+
+    {
+        "title": "Yamaha R3",
+        "price": "1000000.00",
+        "thumbnail": "https://syr.us/n29"
+	}
+
+###
+
+PUT http://localhost:8080/api/productos/update/3 HTTP/1.1
+content-type: application/json
+
+    {
+        "title": "HOLA"
+	}
+###
+
+###
+
+DELETE http://localhost:8080/api/productos/delete/1 HTTP/1.1
+content-type: application/json
+###
+
+GET http://localhost:8080/api/productos/listar HTTP/1.1
+content-type: application/json
+
+###
+GET http://localhost:8080/api/productos/vista HTTP/1.1
+content-type: application/json
