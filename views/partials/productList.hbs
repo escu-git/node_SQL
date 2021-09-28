@@ -1,0 +1,28 @@
+<h1>PRODUCTS</h1>
+
+<div id='tableContainer'>
+{{#if exist}}
+    <table>
+    <thead  class="tableHeader">
+        <tr>
+        <th scope="col">Prod. ID</th>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Picture</th>
+        </tr>
+    </thead>
+        <tbody class='tableBody' id='tableBody'>
+        {{#each products}}
+        <tr>
+        <th scope="row" class='id'>{{this.id}}</th>
+        <td class='title'>{{this.title}}</td>
+        <td class='price'>{{this.price}}</td>
+        <td class='thumbnail'><img src={{this.thumbnail}} alt={{this.title}} ></td>
+        </tr>
+        {{/each}}
+    </tbody>
+    {{else}}
+        <span>No hay productos!</span>
+{{/if }}
+</table>
+</div>

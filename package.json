@@ -1,0 +1,21 @@
+{
+  "name": "TestingSocket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^5.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.4",
+    "path": "^0.12.7",
+    "socket.io": "^4.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
