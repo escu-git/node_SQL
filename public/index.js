@@ -62,6 +62,3 @@ function showProduct(data) {
     tableContainer.innerHTML=`<span>No hay productos!</span>`
   }
 }
-
-
-console.log(body)

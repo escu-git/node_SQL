@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
-const {appRouter, productos} = require('./helpers/appRouter.js');
+const {appRouter} = require('./helpers/appRouter.js');
+const {manageNewProduct, manageNewMessage} = require('./helpers/socketFunctions');
 const handlebarsEngine = require('./helpers/handlebars');
-const product = require('./helpers/newProduct');
+
 
 const PORT = process.env.PORT || 8080;
 app.use('/api', appRouter);
@@ -26,14 +27,20 @@ io.on('connection', (socket)=>{
     console.log('User connected')
     socket.emit('message', 'mensaje socket')
     socket.on('newProduct',(data)=>{
-        const{title, price, thumbnail}=data;
-        newProd = new product(title, price, thumbnail);
-        productos.length < 1 ? newProd.productId(0) : newProd.productId(productos.length)
-        productos.push(newProd)
-        socket.emit('sentProduct', {newProd, productos});
+        manageNewProduct(data)
+    })
+    socket.on('newMessage', msg=>{
+        manageNewMessage(msg, socket)
     })
 })
 
+//function to export socket.io to other js files.
+function getSocketFromApp(){
+    return io;
+}
 
+//function to modularize handlebars config.
 handlebarsEngine(app);
+
+module.exports.getSocketFromApp=getSocketFromApp;
 
