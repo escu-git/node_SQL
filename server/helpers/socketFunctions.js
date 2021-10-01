@@ -1,8 +1,10 @@
-const product = require('./classes');
+const fs = require('fs');
+const {product, file} = require('./classes');
 const {productos} = require('./appRouter');
 //Function to manage new products from form.
+const chatFile = 'index.txt'
 const messageHistory=[];
-
+persistentHistory()
 function manageNewProduct(data, socket){
     const{title, price, thumbnail}=data;
     newProd = new product(title, price, thumbnail);
@@ -21,7 +23,26 @@ function manageNewMessage(msg, socket, io){
         date:date.toString(),
     }
     messageHistory.push(messageData);
+    let persistentFile =new file(chatFile);
+    persistentFile.writeFile(messageHistory)
+
     io.sockets.emit('showMessage', messageHistory)
 }
 
-module.exports={manageNewProduct, manageNewMessage}
+function persistentHistory(){
+    let checkFile = new file(chatFile);
+    let checkedFile = checkFile.readFile();
+    console.log(checkedFile)
+    if(checkedFile){
+        messageHistory=checkedFile;
+        console.log(messageHistory)
+    }else{
+        return
+    }
+}
+function checkChatHistory(io){
+    io.emit('showMessage', messageHistory)
+}
+
+
+module.exports={manageNewProduct, manageNewMessage, checkChatHistory}

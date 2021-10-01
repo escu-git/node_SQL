@@ -1,3 +1,4 @@
+const fs = require('fs');
 
 class product{
     constructor(title, price, thumbnail){
@@ -9,4 +10,38 @@ class product{
         this.id= lastId+1
     }
 }
-module.exports = product;
+
+class file{
+    constructor(file){
+        this.file=file;
+    };
+
+    async writeFile(msg){
+        try{
+            let file = `./server/files/${this.file}`
+            fs.writeFileSync(file, JSON.stringify(msg))
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    readFile(){
+        new Promise(async(resolve, reject)=>{
+            try{
+                let fileData = fs.readFileSync(`./server/files/${this.file}`, 'utf-8');
+                let result = JSON.parse(fileData)
+                resolve(result);
+            }catch(err){
+                console.log(err)
+            }
+        })
+    }
+    deleteChat(){
+        try{
+            fs.unlink(`./server/files/${this.file}`)
+        }catch(err){
+            console.log(err)
+        }
+    }
+}
+module.exports = {product, file};
