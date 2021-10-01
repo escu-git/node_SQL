@@ -1,6 +1,6 @@
 const express = require('express');
 const appRouter = express.Router();
-const product = require('./newProduct');
+const product = require('./classes');
 
 const productos = [];
 

@@ -10,17 +10,17 @@
 <body>
     <div class='chatContainer'>
         <div class='userContainer' id='userContainer'>
-            <input type="email" name="inputUser" id="inputUser">
+            <input type="email" name="inputUser" id="inputUser" placeholder="Inserte su nombre">
             <button id='setUser'>SET</button>
         </div>
-        <span class='userName' id='userName'></span>
+        <span id='connectedUsers'></span>
+        <span id='userName'></span>
         <div class='chatArea' id='chatArea'></div>
         <div class='chatBoxContainer'>
-            <input type="text" name="chatBox" id="chatBox">
+            <input type="text" name="chatBox" id="chatBox" placeholder="Presiona enter para enviar mensaje">
             <button id='sendMessage'>SEND</button>
         </div>
     </div>
-    <div class='connectedUsers'></div>
     
 </body>
 <script src="/chat.js"></script>

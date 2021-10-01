@@ -1,24 +1,35 @@
 const chatSocket = io();
-
 let userName = null;
 const userNameTag = document.getElementById('userName');
 const userContainer = document.getElementById('userContainer');
 const inputUser = document.getElementById('inputUser');
 const setUserBtn = document.getElementById('setUser');
-setUserBtn.onclick=()=>setUserName();
-
 const chatBox = document.getElementById('chatBox');
 const sendMessageBtn = document.getElementById('sendMessage');
+const chatArea = document.getElementById('chatArea');
+inputUser.onkeydown=(event)=>pressEnterToSend(event, setUserName);
+setUserBtn.onclick=()=>setUserName();
+chatBox.onkeydown=(event)=>pressEnterToSend(event , sendMessage)
 sendMessageBtn.onclick=()=>sendMessage();
 
-const chatArea = document.getElementById('chatArea');
+chatSocket.on('showMessage', data=>{
+    const chat = data.map((x)=>{
+    let side = x.userId == chatSocket.id ? 'myMsg' : 'otherMsg';
+   return( `
+    <div class='messageBox ${side}'>
+        <div class='messageInfo'>
+            <span class='date'>${x.date}</span>
+            <span class='userTag'>${x.userName}:</span>
+        </div>
+        <div class='messageText'>
+            <span>${x.message}</span>
+        </div>
+    </div>
+    `)}
+    ).join(' ')
 
-chatSocket.on('showMessage', msg=>{
-    console.log(msg)
-    chatArea.innerHTML=`
-    <span>${msg.userName} : </span>
-    <span>${msg.message}</span>
-    `
+    chatArea.innerHTML=chat;
+    chatArea.scrollTop = chatArea.scrollHeight;
 })
 
 function setUserName(){
@@ -26,9 +37,13 @@ function setUserName(){
         alert('Add text to your user name');
         return
     }else{
+        userNameTag.classList.add('userName')
         userName=inputUser.value;
         userContainer.style.display='none';
-        userNameTag.innerHTML=`Welcome to chat: ${userName}`
+        setTimeout(()=>{
+            userNameTag.innerHTML=`Welcome to chat: ${userName}`
+
+        },1500)
     }
 }
 
@@ -49,6 +64,15 @@ function sendMessage(){
         }
     }
 };
+
+function pressEnterToSend(event, fn){
+    if(event.keyCode == 13){
+        fn()
+    }else{
+        return
+    }
+}
+
 
 
 

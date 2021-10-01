@@ -4,7 +4,6 @@ const {appRouter} = require('./helpers/appRouter.js');
 const {manageNewProduct, manageNewMessage} = require('./helpers/socketFunctions');
 const handlebarsEngine = require('./helpers/handlebars');
 
-
 const PORT = process.env.PORT || 8080;
 app.use('/api', appRouter);
 app.use(express.json());
@@ -18,7 +17,6 @@ app.use(express.static('public'));
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-
 http.listen(PORT, ()=>{
     console.log(`Server initializated on port ${PORT}`)
 });
@@ -27,10 +25,10 @@ io.on('connection', (socket)=>{
     console.log('User connected')
     socket.emit('message', 'mensaje socket')
     socket.on('newProduct',(data)=>{
-        manageNewProduct(data)
+        manageNewProduct(data, io)
     })
     socket.on('newMessage', msg=>{
-        manageNewMessage(msg, socket)
+        manageNewMessage(msg, socket, io)
     })
 })
 
@@ -42,5 +40,5 @@ function getSocketFromApp(){
 //function to modularize handlebars config.
 handlebarsEngine(app);
 
-module.exports.getSocketFromApp=getSocketFromApp;
+module.exports.importedIo=getSocketFromApp;
 

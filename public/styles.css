@@ -14,7 +14,8 @@
   height: 30vh;
   background-color: #42c492;
   padding: 10px;
-  margin: 20px auto;
+  margin: 40px auto;
+  border-radius: 10px;
 }
 
 .chatContainer .userContainer {
@@ -28,11 +29,13 @@
 }
 
 .chatContainer .chatArea {
-  width: 80%;
+  width: 85%;
   height: 90%;
   background-color: whitesmoke;
   margin: 10px auto;
   font-size: 20px;
+  overflow-x: auto;
+  border-radius: 10px;
 }
 
 .chatContainer .chatBoxContainer {
@@ -50,16 +53,79 @@
 }
 
 .chatContainer .conectedUsers {
-  width: 30px;
+  position: absolute;
+  background-color: #42c492;
+  width: 150px;
+  height: 40px;
+  left: 0;
+  top: 0;
 }
 
 .chatContainer .userName {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: 1.5s;
+  transition: 1.5s;
   position: absolute;
-  top: 0;
+  font-weight: bolder;
+  top: -28px;
   right: 0;
-  width: 300px;
-  height: 30px;
-  background-color: yellow;
+  width: 350px;
+  height: 40px;
+  background-color: #42c492;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.chatContainer .messageBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.chatContainer .messageBox .messageInfo {
+  padding: 0 15px;
+}
+
+.chatContainer .messageBox .messageInfo .date {
+  color: brown;
+}
+
+.chatContainer .messageBox .messageInfo .userTag {
+  color: blue;
+  font-weight: bolder;
+}
+
+.chatContainer .messageBox .messageInfo:placeholder-shown {
+  color: violet;
+}
+
+.chatContainer .messageBox .messageText {
+  padding: 0 30px;
+  color: green;
+  font-style: italic;
+}
+
+.chatContainer .myMsg {
+  text-align: right;
+  border: 0.5px solid rgba(32, 178, 171, 0.315);
+  background-color: rgba(32, 178, 171, 0.164);
+}
+
+.chatContainer .otherMsg {
+  text-align: left;
+  border: 0.5px solid rgba(240, 128, 128, 0.5);
+  background-color: rgba(240, 128, 128, 0.274);
 }
 
 #productForm {

@@ -7,19 +7,22 @@
     height:30vh;
     background-color: rgb(66, 196, 146);
     padding:10px;
-    margin:20px auto;
+    margin:40px auto;
+    border-radius: 10px;
+
     .userContainer{
         display:flex;
         justify-content: center;
         height:20%;
-        
     }
     .chatArea{
-        width:80%;
+        width:85%;
         height:90%;
         background-color: whitesmoke;
         margin:10px auto;
         font-size:20px;
+        overflow-x: auto;
+        border-radius: 10px;
     }
     .chatBoxContainer{
         display:flex;
@@ -30,14 +33,58 @@
         }
     }
     .conectedUsers{
-        width: 30px;
+        position:absolute;
+        background-color: rgb(66, 196, 146);
+        width: 150px;
+        height: 40px;
+        left:0;
+        top:0;
     }
     .userName{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        transition:1.5s;
         position:absolute;
-        top:0;
+        font-weight: bolder;
+        top:-28px;
         right:0;
-        width:300px;
-        height: 30px;
-        background-color: yellow;
+        width:350px;
+        height: 40px;
+        background-color:rgb(66, 196, 146);
+        border-radius:10px 10px 0px 0px;
     }
+    .messageBox{
+        display:flex;
+        flex-direction: column;
+        .messageInfo{
+            padding: 0 15px;
+            .date{
+                color:brown;
+            };
+            .userTag{
+                color:blue;
+                font-weight: bolder;
+            }
+            &:placeholder-shown{
+                color:violet;
+            }
+        }
+        .messageText{
+            padding: 0 30px;
+            color:green;
+            font-style: italic;
+        }
+    }
+    .myMsg{
+        text-align: right;
+        border:0.5px solid rgba(32, 178, 171, 0.315);
+        background-color: rgba(32, 178, 171, 0.164);
+    }
+    .otherMsg{
+        text-align:left;
+        border:0.5px solid rgba(240, 128, 128, 0.5);
+        background-color: rgba(240, 128, 128, 0.274);
+    }
+
 }

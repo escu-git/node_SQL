@@ -9,5 +9,4 @@ class product{
         this.id= lastId+1
     }
 }
-
 module.exports = product;

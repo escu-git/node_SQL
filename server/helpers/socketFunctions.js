@@ -1,8 +1,9 @@
-const product = require('../helpers/newProduct');
+const product = require('./classes');
 const {productos} = require('./appRouter');
-
 //Function to manage new products from form.
-function manageNewProduct(data){
+const messageHistory=[];
+
+function manageNewProduct(data, socket){
     const{title, price, thumbnail}=data;
     newProd = new product(title, price, thumbnail);
     productos.length < 1 ? newProd.productId(0) : newProd.productId(productos.length)
@@ -11,14 +12,16 @@ function manageNewProduct(data){
 }
 
 //Function to manage new message coming from online chat.
-function manageNewMessage(msg, socket){
+function manageNewMessage(msg, socket, io){
+    const date = new Date().toLocaleDateString('en-GB');
     const messageData ={
         userId:socket.id,
         message:msg.msg,
-        userName:msg.user 
+        userName:msg.user,
+        date:date.toString(),
     }
-    socket.broadcast.emit('showMessage',messageData)
-
+    messageHistory.push(messageData);
+    io.sockets.emit('showMessage', messageHistory)
 }
 
 module.exports={manageNewProduct, manageNewMessage}
