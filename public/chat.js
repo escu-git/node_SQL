@@ -39,10 +39,10 @@ function setUserName(){
     }else{
         userNameTag.classList.add('userName')
         userName=inputUser.value;
-        userContainer.style.display='none';
+        userContainer.style.cssText='transition:1.5s; height:0px'
         setTimeout(()=>{
             userNameTag.innerHTML=`Welcome to chat: ${userName}`
-
+            userContainer.remove(inputUser, setUserBtn)
         },1500)
     }
 }

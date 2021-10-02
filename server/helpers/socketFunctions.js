@@ -3,8 +3,8 @@ const {product, file} = require('./classes');
 const {productos} = require('./appRouter');
 //Function to manage new products from form.
 const chatFile = 'index.txt'
-const messageHistory=[];
-persistentHistory()
+let messageHistory=[];
+
 function manageNewProduct(data, socket){
     const{title, price, thumbnail}=data;
     newProd = new product(title, price, thumbnail);
@@ -25,24 +25,29 @@ function manageNewMessage(msg, socket, io){
     messageHistory.push(messageData);
     let persistentFile =new file(chatFile);
     persistentFile.writeFile(messageHistory)
-
     io.sockets.emit('showMessage', messageHistory)
 }
 
-function persistentHistory(){
-    let checkFile = new file(chatFile);
-    let checkedFile = checkFile.readFile();
-    console.log(checkedFile)
-    if(checkedFile){
-        messageHistory=checkedFile;
-        console.log(messageHistory)
-    }else{
-        return
+async function persistentHistory(socket){
+    try{
+        //!CAMI, no pude utilizar el resolve del método readFile() de la clase file './helpers/classes.js'
+        // let persistentFile = new file(chatFile)
+        // let resultado = await persistentFile.readFile()
+        // console.log(resultado)
+        let readPersistentFile = fs.readFileSync(`./server/files/${chatFile}`, 'utf-8')
+        let result = JSON.parse(readPersistentFile);
+        messageHistory = result
+        socket.emit('showMessage', messageHistory)
+    }catch(err){
+        console.log(err)
     }
-}
-function checkChatHistory(io){
-    io.emit('showMessage', messageHistory)
+    // if(checkFile){
+    //     messageHistory=checkFile;
+    //     console.log(messageHistory)
+    // }else{
+    //     return
+    // }
 }
 
 
-module.exports={manageNewProduct, manageNewMessage, checkChatHistory}
+module.exports={manageNewProduct, manageNewMessage, persistentHistory}

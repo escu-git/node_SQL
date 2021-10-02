@@ -11,9 +11,10 @@ class product{
     }
 }
 
+
 class file{
     constructor(file){
-        this.file=file;
+        this.file = file;
     };
 
     async writeFile(msg){
@@ -23,19 +24,20 @@ class file{
         }catch(err){
             console.log(err)
         }
-    }
+    };
 
-    readFile(){
+     async readFile(){
         new Promise(async(resolve, reject)=>{
             try{
-                let fileData = fs.readFileSync(`./server/files/${this.file}`, 'utf-8');
-                let result = JSON.parse(fileData)
+                let fileData = await fs.readFileSync(`./server/files/${this.file}`, 'utf-8')
+                let result = JSON.parse(fileData);
                 resolve(result);
             }catch(err){
-                console.log(err)
+                reject(err)
             }
         })
-    }
+    };
+
     deleteChat(){
         try{
             fs.unlink(`./server/files/${this.file}`)

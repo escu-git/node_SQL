@@ -4,12 +4,12 @@ const product = require('./classes');
 
 const productos = [];
 
-appRouter.post('/',(req, res)=>{
-    console.log(req.body)
-    res.json({message: req.body})
-})
+// appRouter.post('/',(req, res)=>{
+//     console.log(req.body)
+//     res.json({message: req.body})
+// })
 
-appRouter.get('/productos/vista', (req, res)=>{
+appRouter.get('/home', (req, res)=>{
     try{
     if(productos.length != 0) {
         res.render('main', {products: productos, exist:true})

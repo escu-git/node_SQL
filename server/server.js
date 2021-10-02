@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const {appRouter} = require('./helpers/appRouter.js');
-const {manageNewProduct, manageNewMessage, checkChatHistory} = require('./helpers/socketFunctions');
+const {manageNewProduct, manageNewMessage, persistentHistory} = require('./helpers/socketFunctions.js');
 const handlebarsEngine = require('./helpers/handlebars');
 
 const PORT = process.env.PORT || 8080;
@@ -24,13 +24,13 @@ http.listen(PORT, ()=>{
 io.on('connection', (socket)=>{
     console.log('User connected')
     socket.emit('message', 'mensaje socket')
+    persistentHistory(socket)
     socket.on('newProduct',(data)=>{
         manageNewProduct(data, socket)
     })
     socket.on('newMessage', msg=>{
         manageNewMessage(msg, socket, io)
     })
-    socket.emit('chatHistory', checkChatHistory(io));
 })
 
 //function to export socket.io to other js files.
