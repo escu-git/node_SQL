@@ -2,17 +2,19 @@ const express = require('express');
 const app = express();
 const {appRouter} = require('./helpers/appRouter.js');
 const {manageNewProduct, manageNewMessage, persistentHistory} = require('./helpers/socketFunctions.js');
+const {setDatabase} = require('../Database/product_DB.js');
+const setChatDatabase = require('../Database/chat_DB.js')
 const handlebarsEngine = require('./helpers/handlebars');
 
 const PORT = process.env.PORT || 8080;
+
+setDatabase();
+setChatDatabase();
 app.use('/api', appRouter);
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('public'));
-// app.use('/',(req, res, next)=>{
-//     console.log(req.url)
-//     next()
-// })
+
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
