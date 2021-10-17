@@ -1,31 +1,32 @@
-const dbSettings = require('../Database/db_config.js');
+const dbSettings = require('./config/db_config.js');
 const {sqLite3} = dbSettings;
-const db = require('knex')(sqLite3);
+const db = require('knex');
 
 const chatDB = async() =>{
-    db.schema.createTable('mensajes', table=>{
-        table.increments('userId'),
+    db(sqLite3).schema.createTable('mensajes', table=>{
+        table.increments(),
+        table.string('userId'),
         table.string('message'),
-        table.integer('userName'),
+        table.string('userName'),
         table.string('date')
     })
     .then(x=>{
         console.log('La tabla mensajes fue creada correctamente ✔');
     })
-    .then(x=>setInitial())
     .catch(err=>{console.error(`ChatDB message:`)
     console.log(err)})
 };
 
-const setChatDatabase = () =>{
+const setChatDatabase = async() =>{
     //Chequeamos que las base de datos no existan, para evitar warnings de knex:
-    db.schema.hasTable('mensajes').then(exists =>{
+    db(sqLite3).schema.hasTable('mensajes').then(exists =>{
         if(!exists){
-            productsDB();
+            chatDB();
+            console.log('Chat table created...')
         }else{
-            console.log('Products table already exists ✔');
+            console.log('Chat table already exists ✔');
         }
     });
 }
 
-module.exports = setChatDatabase;
+module.exports = {setChatDatabase};

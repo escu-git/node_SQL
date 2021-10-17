@@ -18,13 +18,13 @@ const savedInfo = (title, price, thumbnail) => {
 };
 
 socket.on("sentProduct", (data) => {
-  const { id, title, price, thumbnail } = data.newProd;
+  console.log(data)
   showProduct(data);
 });
 
 function showProduct(data) {
   const tableContainer = document.getElementById("tableContainer");
-  if(data.productos.length > 0)
+  if(data.length > 0)
   {
     const mockDiv = document.createElement('div');
     let tableHeader =`
@@ -38,7 +38,7 @@ function showProduct(data) {
               </tr>
           </thead>
           `;
-    let tableContent = data.productos.map(x => `
+    let tableContent = data.map(x => `
              <tr>
               <th scope="row" class='id'>${x.id}</th>
               <td class='title'>${x.title}</td>

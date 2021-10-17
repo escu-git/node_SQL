@@ -1,17 +1,17 @@
-const dbSettings = require('./db_config');
+const dbSettings = require('./config/db_config');
 const {mariaDB} = dbSettings;
 const db = require('knex');
 
 const INITIAL_PRODUCTS = [
     {
         title:'Intense Cat',
-        image:"https://firebasestorage.googleapis.com/v0/b/deco-etcetera.appspot.com/o/cuadro9.jpg?alt=media&token=45ca2bc7-d7d0-48c4-8695-ded7e54896b9",
+        thumbnail:"https://firebasestorage.googleapis.com/v0/b/deco-etcetera.appspot.com/o/cuadro9.jpg?alt=media&token=45ca2bc7-d7d0-48c4-8695-ded7e54896b9",
         price:300
 
     },
     {
         title:'Cactus',
-        image:"https://firebasestorage.googleapis.com/v0/b/deco-etcetera.appspot.com/o/cuadro2.jpg?alt=media&token=05211aa9-1d31-461e-9755-3984def842a9",
+        thumbnail:"https://firebasestorage.googleapis.com/v0/b/deco-etcetera.appspot.com/o/cuadro2.jpg?alt=media&token=05211aa9-1d31-461e-9755-3984def842a9",
         price:400
     },
 ];
@@ -39,7 +39,7 @@ const productsDB = async() =>{
         table.increments('id'),
         table.string('title'),
         table.integer('price'),
-        table.string('image')
+        table.string('thumbnail')
     })
     .then(x=>{
         console.log('La tabla products fue creada correctamente ✔');

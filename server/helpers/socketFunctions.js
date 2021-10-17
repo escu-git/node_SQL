@@ -1,20 +1,19 @@
 const fs = require('fs');
-const {product, file} = require('./classes');
-const {productos} = require('./appRouter');
+const {Product} = require('./classes');
+const productDB = require('../Controllers/db.js');
 //Function to manage new products from form.
-const chatFile = 'index.txt'
+const table = 'mensajes';
 let messageHistory=[];
 
-function manageNewProduct(data, socket){
+async function manageNewProduct(data, socket){
     const{title, price, thumbnail}=data;
-    newProd = new product(title, price, thumbnail);
-    productos.length < 1 ? newProd.productId(0) : newProd.productId(productos.length)
-    productos.push(newProd)
-    socket.emit('sentProduct', {newProd, productos});
+    await productDB.insert('products', data);
+    const allProducts = await productDB.readAll('products', "*")
+    socket.emit('sentProduct', allProducts);
 }
 
 //Function to manage new message coming from online chat.
-function manageNewMessage(msg, socket, io){
+async function manageNewMessage(msg, socket, io){
     const date = new Date().toLocaleDateString('en-GB');
     const messageData ={
         userId:socket.id,
@@ -22,32 +21,19 @@ function manageNewMessage(msg, socket, io){
         userName:msg.user,
         date:date.toString(),
     }
-    messageHistory.push(messageData);
-    let persistentFile =new file(chatFile);
-    persistentFile.writeFile(messageHistory)
+    await productDB.insert(table, messageData)
+    messageHistory = await productDB.readAll(table, "*");
     io.sockets.emit('showMessage', messageHistory)
 }
 
 async function persistentHistory(socket){
     try{
-        //!CAMI, no pude utilizar el resolve del método readFile() de la clase file './helpers/classes.js'
-        // let persistentFile = new file(chatFile)
-        // let resultado = await persistentFile.readFile()
-        // console.log(resultado)
-        let readPersistentFile = fs.readFileSync(`./server/files/${chatFile}`, 'utf-8')
-        let result = JSON.parse(readPersistentFile);
-        messageHistory = result
+        let chat = await productDB.readAll(table, "*")
+        messageHistory = chat;
         socket.emit('showMessage', messageHistory)
     }catch(err){
         console.log(err)
     }
-    // if(checkFile){
-    //     messageHistory=checkFile;
-    //     console.log(messageHistory)
-    // }else{
-    //     return
-    // }
 }
-
 
 module.exports={manageNewProduct, manageNewMessage, persistentHistory}

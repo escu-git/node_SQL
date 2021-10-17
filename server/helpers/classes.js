@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-class product{
+class Product{
     constructor(title, price, thumbnail){
         this.title = title,
         this.price = price,
@@ -12,38 +12,38 @@ class product{
 }
 
 
-class file{
-    constructor(file){
-        this.file = file;
-    };
+// class file{
+//     constructor(file){
+//         this.file = file;
+//     };
 
-    async writeFile(msg){
-        try{
-            let file = `./server/files/${this.file}`
-            fs.writeFileSync(file, JSON.stringify(msg))
-        }catch(err){
-            console.log(err)
-        }
-    };
+//     async writeFile(msg){
+//         try{
+//             let file = `./server/files/${this.file}`
+//             fs.writeFileSync(file, JSON.stringify(msg))
+//         }catch(err){
+//             console.log(err)
+//         }
+//     };
 
-     async readFile(){
-        new Promise(async(resolve, reject)=>{
-            try{
-                let fileData = await fs.readFileSync(`./server/files/${this.file}`, 'utf-8')
-                let result = JSON.parse(fileData);
-                resolve(result);
-            }catch(err){
-                reject(err)
-            }
-        })
-    };
+//      async readFile(){
+//         new Promise(async(resolve, reject)=>{
+//             try{
+//                 let fileData = await fs.readFileSync(`./server/files/${this.file}`, 'utf-8')
+//                 let result = JSON.parse(fileData);
+//                 resolve(result);
+//             }catch(err){
+//                 reject(err)
+//             }
+//         })
+//     };
 
-    deleteChat(){
-        try{
-            fs.unlink(`./server/files/${this.file}`)
-        }catch(err){
-            console.log(err)
-        }
-    }
-}
-module.exports = {product, file};
+//     deleteChat(){
+//         try{
+//             fs.unlink(`./server/files/${this.file}`)
+//         }catch(err){
+//             console.log(err)
+//         }
+//     }
+// }
+module.exports = {Product};
